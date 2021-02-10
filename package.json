@@ -1,0 +1,42 @@
+{
+  "name": "camunda-cloud-kit",
+  "version": "1.0.0",
+  "description": "Camunda Cloud Kit for Generative Arts",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "build": "tsc --p tsconfig.json",
+    "dist": "node dist/index.js",
+    "test": "jest --config jest.config.js --runInBand true"
+  },
+  "author": "adam.urban@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "pino": "^6.8.0",
+    "uuid": "^8.2.0",
+    "zeebe-node": "^0.26.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.7",
+    "@types/jasmine": "^3.5.11",
+    "@types/jest": "^26.0.4",
+    "@types/node": "^14.0.20",
+    "@types/pino": "^6.3.4",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.1.0",
+    "node-mocks-http": "^1.8.1",
+    "nyc": "^15.1.0",
+    "pino-pretty": "^4.3.0",
+    "prettier": "2.0.5",
+    "ts-jest": "^26.1.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  }
+}
