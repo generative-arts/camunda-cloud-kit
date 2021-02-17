@@ -1,10 +1,23 @@
 {
   "name": "camunda-cloud-kit",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Camunda Cloud Kit for Generative Arts",
-  "main": "index.ts",
+  "keywords": [
+    "camunda",
+    "generative-art",
+    "zeebe"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/generative-arts/camunda-cloud-kit"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "start": "ts-node ./src/index.ts",
+    "start": "ts-node ./src/try.ts",
     "build": "tsc --p tsconfig.json",
     "dist": "node dist/index.js",
     "test": "jest --config jest.config.js --runInBand true"
@@ -12,6 +25,7 @@
   "author": "adam.urban@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "pino": "^6.8.0",
     "uuid": "^8.2.0",
