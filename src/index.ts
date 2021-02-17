@@ -1,4 +1,5 @@
 export { BpmnLoaderController } from './controller/bpmnLoader.controller'
+export { CamundaCloudController } from './controller/camundacloud.controller'
 export { ConfigController } from './controller/config.controller'
 export { ZeebeController } from './controller/zeebe.controller'
 export { Worker } from './enums/worker.enum'
