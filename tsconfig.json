@@ -6,7 +6,13 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "types": ["node", "jest"],
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom"],
+    "rootDir": "src",
+    "declaration": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "plugins": [
       {
         "name": "typescript-tslint-plugin"

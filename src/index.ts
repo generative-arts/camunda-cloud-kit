@@ -1,16 +1,9 @@
-import { ZeebeController } from './controller/zeebe.controller';
-import { logger } from './utils/Logger';
-import { AddCanvasElementWorker } from './worker/addcanvaselement.worker';
-
-async function run() {
-  logger.info(`Connecting Zeebe Client`);
-  const zeebeController = new ZeebeController();
-  await zeebeController.getTopology();
-
-  logger.info(`Creating Zeebe Workers`);
-
-  const addCanvasElementWorker = new AddCanvasElementWorker(zeebeController);
-  addCanvasElementWorker.create();
-}
-
-run();
+export { BpmnLoaderController } from './controller/bpmnLoader.controller'
+export { ConfigController } from './controller/config.controller'
+export { ZeebeController } from './controller/zeebe.controller'
+export { Worker } from './enums/worker.enum'
+export { CamundaCloudConfig } from './types/CamundaCloudConfig.type'
+export { SharedBpmnResponse } from './types/SharedBpmnResponse.type'
+export { AddCanvasElementWorker } from './worker/addcanvaselement.worker'
+export { BpmnLoaderWorker } from './worker/bpmnloader.worker'
+export { DecreaseWorker } from './worker/decrease.worker'

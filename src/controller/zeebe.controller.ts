@@ -1,3 +1,4 @@
+import { CamundaCloudConfig } from '../types/CamundaCloudConfig.type';
 import { v4 } from 'uuid';
 import { ConfigParameter } from '../enums/config.parameter.enum';
 import { ConfigController } from './config.controller';
@@ -6,12 +7,18 @@ const { ZBClient } = require('zeebe-node');
 export class ZeebeController {
   private zbc: any;
 
-  constructor() {
+  constructor(config?: CamundaCloudConfig) {
     this.zbc = new ZBClient({
       camundaCloud: {
-        clientId: ConfigController.get(ConfigParameter.CLIENT_ID),
-        clientSecret: ConfigController.get(ConfigParameter.CLIENT_SECRET),
-        clusterId: ConfigController.get(ConfigParameter.CLUSTER_ID),
+        clientId: config
+          ? config.clientId
+          : ConfigController.get(ConfigParameter.CLIENT_ID),
+        clientSecret: config
+          ? config.clientSecret
+          : ConfigController.get(ConfigParameter.CLIENT_SECRET),
+        clusterId: config
+          ? config.clusterId
+          : ConfigController.get(ConfigParameter.CLUSTER_ID),
       },
     });
   }
