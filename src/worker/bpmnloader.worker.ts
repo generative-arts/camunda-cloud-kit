@@ -1,3 +1,4 @@
+import { BPMN, BpmnController } from '@generative-arts/bpmn-art'
 import { BpmnLoaderController } from '../controller/bpmnLoader.controller'
 import { ZeebeController } from '../controller/zeebe.controller'
 import { Worker } from '../enums/worker.enum'
@@ -22,10 +23,20 @@ export class BpmnLoaderWorker {
           const data: SharedBpmnResponse = await BpmnLoaderController.loadShared(
             shareUrl
           )
+
+          const bpmnController = new BpmnController(
+            data.data.share.diagram.content
+          )
+
           complete.success({
             bpmn: {
               id: data.data.share.id,
               name: data.data.share.diagram.name,
+              elements: {
+                tasks: bpmnController.count(BPMN.TASK),
+                messages: bpmnController.count(BPMN.MESSAGE),
+                gateways: bpmnController.count(BPMN.EXCLUSIVE_GATEWAY),
+              },
             },
           })
         } catch (error) {
