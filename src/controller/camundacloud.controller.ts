@@ -1,3 +1,4 @@
+import { CamundaCloudConfig } from '../types/CamundaCloudConfig.type'
 import { logger } from '../utils/Logger'
 import { AddCanvasElementWorker } from '../worker/addcanvaselement.worker'
 import { BpmnLoaderWorker } from '../worker/bpmnloader.worker'
@@ -5,9 +6,12 @@ import { DecreaseWorker } from '../worker/decrease.worker'
 import { ZeebeController } from './zeebe.controller'
 
 export class CamundaCloudController {
-  public static async run(seconds: number) {
+  public static async run(
+    seconds: number,
+    camundaCloudConfig?: CamundaCloudConfig
+  ) {
     logger.info(`Connecting Zeebe Client`)
-    const zeebeController = new ZeebeController()
+    const zeebeController = new ZeebeController(camundaCloudConfig)
     await zeebeController.getTopology()
 
     logger.info(`Creating Zeebe Workers`)
