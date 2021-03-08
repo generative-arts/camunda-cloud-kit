@@ -12,12 +12,14 @@ export class CamundaCloudController {
     await zeebeController.getTopology()
 
     logger.info(`Starting new Process Instance`)
+    const mandatoryVariables = {
+      shareUrl: artConfig.shareUrl,
+      artId: artConfig.artId,
+    }
+    const variables = Object.assign(mandatoryVariables, artConfig.variables)
     const newInstanceResponse = await zeebeController.startInstance(
       artConfig.processId,
-      {
-        shareUrl: artConfig.shareUrl,
-        artId: artConfig.artId,
-      }
+      variables
     )
     logger.info(`New Instance: ${JSON.stringify(newInstanceResponse)}`)
 
