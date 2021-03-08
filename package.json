@@ -1,6 +1,6 @@
 {
   "name": "camunda-cloud-kit",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Camunda Cloud Kit for Generative Arts",
   "keywords": [
     "camunda",
@@ -30,6 +30,7 @@
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "pino": "^6.8.0",
+    "twitter": "^1.7.1",
     "uuid": "^8.2.0",
     "zeebe-node": "^0.26.0"
   },
