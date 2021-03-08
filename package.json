@@ -1,6 +1,6 @@
 {
   "name": "camunda-cloud-kit",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Camunda Cloud Kit for Generative Arts",
   "keywords": [
     "camunda",
@@ -26,7 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "@generative-arts/bpmn-art": "^0.0.1",
-    "@generative-arts/canvas-kit": "^0.0.3",
+    "@generative-arts/canvas-kit": "^0.0.5",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "pino": "^6.8.0",

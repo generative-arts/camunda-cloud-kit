@@ -2,12 +2,12 @@ import { ZeebeController } from '../controller/zeebe.controller'
 import { Worker } from '../enums/worker.enum'
 import { logger } from '../utils/Logger'
 
-export class DecreaseWorker {
+export class IncreaseWorker {
   constructor(private zeebeController: ZeebeController) {}
 
   public create() {
     this.zeebeController.getZeebeClient().createWorker({
-      taskType: Worker.DECREASE,
+      taskType: Worker.INCREASE,
       taskHandler: (job: any, complete: any, worker: any) => {
         const variableName = job.customHeaders.variableName
 
@@ -28,7 +28,7 @@ export class DecreaseWorker {
         logger.info(`Decreasing ${variableName}`)
 
         const response: any = {}
-        response[variableName] = variableValue - 1
+        response[variableName] = variableValue + 1
 
         complete.success(response)
       },
