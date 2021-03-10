@@ -27,7 +27,7 @@ async function run() {
     artId: '1',
     processId: 'square',
     seconds: 60,
-    shareUrl: 'https://cawemo.com/share/68ca82e4-7bb8-4766-a2ac-e2293a6810db',
+    shareUrl: 'https://cawemo.com/share/9b4e4cd5-17ef-4017-b62d-a76bd86fa637',
     template: templateConfig,
   })
 

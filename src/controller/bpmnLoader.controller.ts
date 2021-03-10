@@ -9,8 +9,6 @@ enum ROUTE {
   API = `api`,
 }
 
-const BASE_URL = `https://cawemo.com`
-
 export class BpmnLoaderController {
   // API is not publicly supported!
   public static async loadShared(url: string): Promise<SharedBpmnResponse> {
