@@ -1,13 +1,15 @@
 /* eslint-disable no-case-declarations */
 import { Template, TemplateConfig } from '@generative-arts/canvas-kit'
+import { TwitterConfig } from '../types/TwitterConfig.type'
 import { ArtConfig } from '../types/ArtConfig.type'
 import { logger } from '../utils/Logger'
 import { BpmnLoaderWorker } from '../worker/bpmnloader.worker'
 import { TemplateSquareWorker } from '../worker/template.square.worker'
 import { ZeebeController } from './zeebe.controller'
+import { TwitterController } from './twitter.controller'
 
 export class CamundaCloudController {
-  public static async run(artConfig: ArtConfig) {
+  public static async run(artConfig: ArtConfig, twitterConfig?: TwitterConfig) {
     logger.info(`Connecting Zeebe Client`)
     const zeebeController = new ZeebeController(artConfig.camundaCloudConfig)
     await zeebeController.getTopology()
@@ -34,7 +36,13 @@ export class CamundaCloudController {
 
     switch (templateConfig.name) {
       case Template.SQUARE:
-        const templateSquareWorker = new TemplateSquareWorker(zeebeController)
+        const twitterController = twitterConfig
+          ? new TwitterController(twitterConfig)
+          : undefined
+        const templateSquareWorker = new TemplateSquareWorker(
+          zeebeController,
+          twitterController
+        )
         templateSquareWorker.createTaskIterationWorker()
         templateSquareWorker.finalize()
         break

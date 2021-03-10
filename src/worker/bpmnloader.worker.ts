@@ -1,8 +1,8 @@
 import { BPMN, BpmnController } from '@generative-arts/bpmn-art'
-import { TemplateConfig } from '@generative-arts/canvas-kit'
 import { BpmnLoaderController } from '../controller/bpmnLoader.controller'
 import { ZeebeController } from '../controller/zeebe.controller'
 import { Worker } from '../enums/worker.enum'
+import { BpmnFacts } from '../types/BpmnFacts.type'
 import { SharedBpmnResponse } from '../types/SharedBpmnResponse.type'
 import { logger } from '../utils/Logger'
 
@@ -14,12 +14,6 @@ export class BpmnLoaderWorker {
       taskType: Worker.BPMN_LOADER,
       taskHandler: async (job: any, complete: any, worker: any) => {
         const shareUrl: string = job.variables.shareUrl
-        const templateConfig: TemplateConfig = job.variables.templateConfig
-
-        if (!templateConfig) {
-          complete.failure('Template Config not found')
-          return
-        }
 
         if (!shareUrl) {
           complete.failure('Share URL <shareUrl> not found on process context')
@@ -35,16 +29,14 @@ export class BpmnLoaderWorker {
             data.data.share.diagram.content
           )
 
-          templateConfig.elements.tasks = bpmnController.count(BPMN.TASK)
-          templateConfig.elements.exclusiveGateways = bpmnController.count(
-            BPMN.EXCLUSIVE_GATEWAY
-          )
-          templateConfig.elements.endEvents = bpmnController.count(
-            BPMN.END_EVENT
-          )
+          const bpmnFacts: BpmnFacts = {
+            tasks: bpmnController.count(BPMN.TASK),
+            exclusiveGateways: bpmnController.count(BPMN.EXCLUSIVE_GATEWAY),
+            endEvents: bpmnController.count(BPMN.END_EVENT),
+          }
 
           complete.success({
-            templateConfig,
+            bpmnFacts,
           })
         } catch (error) {
           logger.error(error)

@@ -8,6 +8,7 @@ import { OutputController } from '../controller/output.controller'
 import { TwitterController } from '../controller/twitter.controller'
 import { ZeebeController } from '../controller/zeebe.controller'
 import { Worker } from '../enums/worker.enum'
+import { BpmnFacts } from '../types/BpmnFacts.type'
 import { logger } from '../utils/Logger'
 
 export class TemplateSquareWorker {
@@ -24,10 +25,25 @@ export class TemplateSquareWorker {
         const currentTask: number = job.variables.currentTask
           ? Number(job.variables.currentTask)
           : 0
+        const bpmnFacts: BpmnFacts = job.variables.bpmnFacts
 
         if (!templateConfig) {
           complete.failure('Template Config not found')
           return
+        }
+
+        if (currentTask === 0) {
+          if (!bpmnFacts) {
+            complete.failure('BPMN Facts not found')
+            return
+          }
+
+          templateConfig.elements.tasks = Math.min(bpmnFacts.tasks, 10)
+          templateConfig.elements.exclusiveGateways = Math.min(
+            bpmnFacts.exclusiveGateways,
+            5
+          )
+          templateConfig.elements.endEvents = Math.min(bpmnFacts.endEvents, 5)
         }
 
         logger.info(`Template Square: Task Iteration ${currentTask}`)
@@ -73,7 +89,7 @@ export class TemplateSquareWorker {
         if (this.twitterController) {
           await this.twitterController.post({
             file: target,
-            status: `Your Processes are Art! #camundasummit`,
+            status: `Your Processes are Art! #camundasummit ${artId}`,
           })
         }
 
