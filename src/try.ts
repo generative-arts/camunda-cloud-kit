@@ -3,7 +3,7 @@ import { CamundaCloudController } from './controller/camundacloud.controller'
 
 async function run() {
   const templateConfig: TemplateConfig = {
-    name: Template.SQUARE,
+    name: Template.ELLIPSE,
     colors: [
       '247,37,133',
       '114,9,183',
@@ -25,9 +25,9 @@ async function run() {
 
   await CamundaCloudController.run({
     artId: '1',
-    processId: 'square',
+    processId: 'dark-vs-light',
     seconds: 60,
-    shareUrl: 'https://cawemo.com/share/9b4e4cd5-17ef-4017-b62d-a76bd86fa637',
+    shareUrl: 'https://cawemo.com/share/aa2b99e4-fd0a-4c73-9e20-acd7de924351',
     template: templateConfig,
   })
 
