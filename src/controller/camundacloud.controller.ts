@@ -1,12 +1,13 @@
 /* eslint-disable no-case-declarations */
 import { Template, TemplateConfig } from '@generative-arts/canvas-kit'
-import { TwitterConfig } from '../types/TwitterConfig.type'
 import { ArtConfig } from '../types/ArtConfig.type'
+import { TwitterConfig } from '../types/TwitterConfig.type'
 import { logger } from '../utils/Logger'
 import { BpmnLoaderWorker } from '../worker/bpmnloader.worker'
+import { TemplateDarkVsLightWorker } from '../worker/template.darklight.worker'
 import { TemplateSquareWorker } from '../worker/template.square.worker'
-import { ZeebeController } from './zeebe.controller'
 import { TwitterController } from './twitter.controller'
+import { ZeebeController } from './zeebe.controller'
 
 export class CamundaCloudController {
   public static async run(artConfig: ArtConfig, twitterConfig?: TwitterConfig) {
@@ -34,11 +35,11 @@ export class CamundaCloudController {
     const bpmnLoaderWorker = new BpmnLoaderWorker(zeebeController)
     bpmnLoaderWorker.create()
 
+    const twitterController = twitterConfig
+      ? new TwitterController(twitterConfig)
+      : undefined
     switch (templateConfig.name) {
       case Template.SQUARE:
-        const twitterController = twitterConfig
-          ? new TwitterController(twitterConfig)
-          : undefined
         const templateSquareWorker = new TemplateSquareWorker(
           zeebeController,
           twitterController
@@ -46,21 +47,15 @@ export class CamundaCloudController {
         templateSquareWorker.createTaskIterationWorker()
         templateSquareWorker.finalize()
         break
+      case Template.ELLIPSE:
+        const templateDarkVsLightWorker = new TemplateDarkVsLightWorker(
+          zeebeController,
+          twitterController
+        )
+        templateDarkVsLightWorker.createTaskIterationWorker()
+        templateDarkVsLightWorker.finalize()
+        break
     }
-
-    // const newInstanceResponse = await zeebeController.startInstance(
-    //   artConfig.processId,
-    //   variables
-    // )
-
-    // const addCanvasElementWorker = new AddCanvasElementWorker(zeebeController)
-    // addCanvasElementWorker.create()
-
-    // const decreaseWorker = new DecreaseWorker(zeebeController)
-    // decreaseWorker.create()
-
-    // const bpmnLoaderWorker = new BpmnLoaderWorker(zeebeController)
-    // bpmnLoaderWorker.create()
 
     await zeebeController.close(artConfig.seconds)
   }

@@ -33,6 +33,8 @@ export class BpmnLoaderWorker {
             tasks: bpmnController.count(BPMN.TASK),
             exclusiveGateways: bpmnController.count(BPMN.EXCLUSIVE_GATEWAY),
             endEvents: bpmnController.count(BPMN.END_EVENT),
+            userTasks: bpmnController.count(BPMN.USER_TASK),
+            serviceTasks: bpmnController.count(BPMN.SERVICE_TASK),
           }
 
           complete.success({
