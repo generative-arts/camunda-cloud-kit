@@ -38,7 +38,10 @@ export class TemplateSquareWorker {
             return
           }
 
-          templateConfig.elements.tasks = Math.min(bpmnFacts.tasks, 10)
+          const tasks =
+            bpmnFacts.tasks + bpmnFacts.serviceTasks + bpmnFacts.userTasks
+
+          templateConfig.elements.tasks = Math.min(tasks, 10)
           templateConfig.elements.exclusiveGateways = Math.min(
             bpmnFacts.exclusiveGateways,
             5
