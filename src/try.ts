@@ -23,13 +23,23 @@ async function run() {
     },
   }
 
-  await CamundaCloudController.run({
-    artId: '1',
-    processId: 'dark-vs-light',
-    seconds: 60,
-    shareUrl: 'https://cawemo.com/share/8d8b335d-8231-4c11-bce2-46e79d74dca1',
-    template: templateConfig,
-  })
+  const twitterConfig = {
+    access_token_key: process.env.TWITTER_API_KEY,
+    access_token_secret: process.env.TWITTER_SECRET_KEY,
+    consumer_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    consumer_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+  }
+
+  await CamundaCloudController.run(
+    {
+      artId: '1',
+      processId: 'dark-vs-light',
+      seconds: 60,
+      shareUrl: 'https://cawemo.com/share/8d8b335d-8231-4c11-bce2-46e79d74dca1',
+      template: templateConfig,
+    },
+    twitterConfig
+  )
 
   // {"circleCount": 2, "shareUrl":"https://cawemo.com/share/68ca82e4-7bb8-4766-a2ac-e2293a6810db"}
 }

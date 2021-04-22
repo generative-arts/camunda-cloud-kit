@@ -10,7 +10,11 @@ export class TwitterController {
   public post(twitterPost: TwitterPost): Promise<any> {
     const client = new Twitter(this.twitterConfig)
 
-    const imageData = fs.readFileSync(twitterPost.file)
+    const imageData = twitterPost.image
+      ? twitterPost.image
+      : fs.readFileSync(twitterPost.file)
+
+    console.log(imageData)
 
     return new Promise((resolve, reject) => {
       client.post(

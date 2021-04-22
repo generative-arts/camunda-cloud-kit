@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { Template, TemplateConfig } from '@generative-arts/canvas-kit'
+import { TwitterComplexGatewayWorker } from '../worker/twitterComplexGateway.worker'
 import { ArtConfig } from '../types/ArtConfig.type'
 import { TwitterConfig } from '../types/TwitterConfig.type'
 import { logger } from '../utils/Logger'
@@ -38,6 +39,12 @@ export class CamundaCloudController {
     const twitterController = twitterConfig
       ? new TwitterController(twitterConfig)
       : undefined
+    const twitterComplexGatewayWorker = new TwitterComplexGatewayWorker(
+      zeebeController,
+      twitterController
+    )
+    twitterComplexGatewayWorker.twitterComplexGateway()
+
     switch (templateConfig.name) {
       case Template.SQUARE:
         const templateSquareWorker = new TemplateSquareWorker(
