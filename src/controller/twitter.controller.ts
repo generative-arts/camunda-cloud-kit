@@ -22,6 +22,7 @@ export class TwitterController {
         { media: imageData },
         (mediaError: any, media: any, _mediaResponse: any) => {
           if (mediaError) {
+            logger.error(mediaError)
             logger.error(`Failed to upload media: ${mediaError.message}`)
             reject(mediaError)
             return

@@ -24,10 +24,10 @@ async function run() {
   }
 
   const twitterConfig = {
-    access_token_key: process.env.TWITTER_API_KEY,
-    access_token_secret: process.env.TWITTER_SECRET_KEY,
-    consumer_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-    consumer_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    consumer_key: process.env.TWITTER_API_KEY,
+    consumer_secret: process.env.TWITTER_SECRET_KEY,
   }
 
   await CamundaCloudController.run(
