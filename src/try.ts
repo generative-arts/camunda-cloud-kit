@@ -35,7 +35,7 @@ async function run() {
       artId: '1',
       processId: 'dark-vs-light',
       seconds: 60,
-      shareUrl: 'https://cawemo.com/share/aa2b99e4-fd0a-4c73-9e20-acd7de924351',
+      shareUrl: 'https://cawemo.com/share/8d8b335d-8231-4c11-bce2-46e79d74dca1',
       template: templateConfig,
     },
     twitterConfig

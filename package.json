@@ -25,7 +25,7 @@
   "author": "adam.urban@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "@generative-arts/bpmn-art": "^0.0.2",
+    "@generative-arts/bpmn-art": "^0.0.3",
     "@generative-arts/canvas-kit": "^0.0.7",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",

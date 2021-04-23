@@ -8,4 +8,5 @@ export enum Worker {
   TEMPLATE_SQUARE_FINALIZE = 'template-square-finalize',
   TEMPLATE_DARK_LIGHT_TASK = 'template-dark-light-iteration',
   TEMPLATE_DARK_LIGHT_FINALIZE = 'template-dark-light-finalize',
+  TWITTER_COMPLEX_GATEWAY = 'twitter-complex-gateway',
 }

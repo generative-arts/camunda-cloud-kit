@@ -10,6 +10,10 @@ export class TwitterController {
   public post(twitterPost: TwitterPost): Promise<any> {
     const client = new Twitter(this.twitterConfig)
 
+    // const imageData = twitterPost.image
+    //   ? twitterPost.image
+    //   : fs.readFileSync(twitterPost.file)
+
     const imageData = fs.readFileSync(twitterPost.file)
 
     return new Promise((resolve, reject) => {
@@ -40,6 +44,37 @@ export class TwitterController {
               resolve('')
             }
           )
+        }
+      )
+    })
+  }
+
+  public postStatus(twitterPost: TwitterPost): Promise<any> {
+    const client = new Twitter(this.twitterConfig)
+
+    // const imageData = twitterPost.image
+    //   ? twitterPost.image
+    //   : fs.readFileSync(twitterPost.file)
+
+    const imageData = fs.readFileSync(twitterPost.file)
+
+    console.log(imageData)
+
+    return new Promise((resolve, reject) => {
+      const status = {
+        status: twitterPost.status,
+      }
+
+      client.post(
+        'statuses/update',
+        status,
+        (statusError: any, tweet: any, _statusResponse: any) => {
+          if (statusError) {
+            logger.error(`Failed to update status: ${statusError.message}`)
+            reject(statusError)
+            return
+          }
+          resolve('')
         }
       )
     })

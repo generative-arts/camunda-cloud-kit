@@ -29,25 +29,33 @@ export class BpmnLoaderWorker {
             data.data.share.diagram.content
           )
 
-          const bpmnFacts: BpmnFacts = {
-            tasks: bpmnController.count(BPMN.TASK),
-            exclusiveGateways: bpmnController.count(BPMN.EXCLUSIVE_GATEWAY),
-            endEvents: bpmnController.count(BPMN.END_EVENT),
-            userTasks: bpmnController.count(BPMN.USER_TASK),
-            serviceTasks: bpmnController.count(BPMN.SERVICE_TASK),
+          const complexGateway = bpmnController.count(BPMN.COMPLEX_GATEWAY)
+          if (complexGateway !== 0) {
+            complete.error(
+              'err_complexGateway',
+              'This symbol should be forbidden, sorry no art for you'
+            )
+          } else {
+            const bpmnFacts: BpmnFacts = {
+              tasks: bpmnController.count(BPMN.TASK),
+              exclusiveGateways: bpmnController.count(BPMN.EXCLUSIVE_GATEWAY),
+              endEvents: bpmnController.count(BPMN.END_EVENT),
+              userTasks: bpmnController.count(BPMN.USER_TASK),
+              serviceTasks: bpmnController.count(BPMN.SERVICE_TASK),
+            }
+            const serviceAndUserTasks =
+              bpmnFacts.userTasks + bpmnFacts.serviceTasks
+
+            const proportionServiceTask =
+              serviceAndUserTasks / bpmnFacts.serviceTasks
+            const proportionUserTask = serviceAndUserTasks / bpmnFacts.userTasks
+
+            complete.success({
+              bpmnFacts,
+              proportionServiceTask,
+              proportionUserTask,
+            })
           }
-          const serviceAndUserTasks =
-            bpmnFacts.userTasks + bpmnFacts.serviceTasks
-
-          const proportionServiceTask =
-            serviceAndUserTasks / bpmnFacts.serviceTasks
-          const proportionUserTask = serviceAndUserTasks / bpmnFacts.userTasks
-
-          complete.success({
-            bpmnFacts,
-            proportionServiceTask,
-            proportionUserTask,
-          })
         } catch (error) {
           logger.error(error)
           complete.failure(`Failed to load shared BPMN from ${shareUrl}`)

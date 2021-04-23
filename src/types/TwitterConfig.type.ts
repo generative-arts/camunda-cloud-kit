@@ -7,5 +7,6 @@ export interface TwitterConfig {
 
 export interface TwitterPost {
   file: string
+  image?: any
   status: string
 }
