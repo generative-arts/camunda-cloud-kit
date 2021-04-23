@@ -19,17 +19,16 @@ export class TwitterComplexGatewayWorker {
         logger.info(`Error: you used a complex gateway!`)
 
         const errorImagePath = path.join(__dirname, 'error.png')
-        const image = fs.readFileSync(errorImagePath)
-        logger.info(`image? ${image !== undefined}`)
-        const target = errorImagePath
+        // const image = fs.readFileSync(errorImagePath)
+        // logger.info(`image? ${image !== undefined}`)
+        // const target = errorImagePath
 
         // fs.copyFileSync(errorImagePath, target)
         // logger.info(target)
 
         if (this.twitterController) {
-          await this.twitterController.post({
-            file: target,
-            image,
+          await this.twitterController.postStatus({
+            file: errorImagePath,
             status: `Your Processes are Art! But unfortunately with a complex gateway! Error! ;) #camundasummit ${artId}`,
           })
         }
