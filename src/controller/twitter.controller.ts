@@ -56,9 +56,9 @@ export class TwitterController {
     //   ? twitterPost.image
     //   : fs.readFileSync(twitterPost.file)
 
-    const imageData = fs.readFileSync(twitterPost.file)
+    // const imageData = fs.readFileSync(twitterPost.file)
 
-    console.log(imageData)
+    // console.log(imageData)
 
     return new Promise((resolve, reject) => {
       const status = {
