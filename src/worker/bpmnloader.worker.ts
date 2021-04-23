@@ -36,9 +36,17 @@ export class BpmnLoaderWorker {
             userTasks: bpmnController.count(BPMN.USER_TASK),
             serviceTasks: bpmnController.count(BPMN.SERVICE_TASK),
           }
+          const serviceAndUserTasks =
+            bpmnFacts.userTasks + bpmnFacts.serviceTasks
+
+          const proportionServiceTask =
+            serviceAndUserTasks / bpmnFacts.serviceTasks
+          const proportionUserTask = serviceAndUserTasks / bpmnFacts.userTasks
 
           complete.success({
             bpmnFacts,
+            proportionServiceTask,
+            proportionUserTask,
           })
         } catch (error) {
           logger.error(error)

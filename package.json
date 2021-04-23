@@ -26,7 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "@generative-arts/bpmn-art": "^0.0.2",
-    "@generative-arts/canvas-kit": "^0.0.6",
+    "@generative-arts/canvas-kit": "^0.0.7",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "pino": "^6.8.0",

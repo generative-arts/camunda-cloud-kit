@@ -1,6 +1,5 @@
 import {
   DarkVsLightTemplate,
-  SquareTemplate,
   TemplateConfig,
   TemplateController,
 } from '@generative-arts/canvas-kit'
@@ -23,11 +22,18 @@ export class TemplateDarkVsLightWorker {
       taskType: Worker.TEMPLATE_DARK_LIGHT_TASK,
       taskHandler: (job: any, complete: any, worker: any) => {
         const templateConfig: TemplateConfig = job.variables.templateConfig
-        const currentTask: number = job.variables.currentTask
-          ? Number(job.variables.currentTask)
+        let currentServiceTask: number = job.variables.currentServiceTask
+          ? Number(job.variables.currentServiceTask)
+          : 0
+        let currentUserTask: number = job.variables.currentUserTask
+          ? Number(job.variables.currentUserTask)
           : 0
         const bpmnFacts: BpmnFacts = job.variables.bpmnFacts
         const bpmnType = job.customHeaders.bpmnType
+        const proportionServiceTask = Number(
+          job.variables.proportionServiceTask
+        )
+        const proportionUserTask = Number(job.variables.proportionUserTask)
 
         if (!templateConfig) {
           complete.failure('Template Config not found')
@@ -41,7 +47,7 @@ export class TemplateDarkVsLightWorker {
           return
         }
 
-        if (currentTask === 0) {
+        if (currentServiceTask === 0 && currentUserTask === 0) {
           if (!bpmnFacts) {
             complete.failure('BPMN Facts not found')
             return
@@ -55,19 +61,36 @@ export class TemplateDarkVsLightWorker {
         }
 
         logger.info(
-          `Template Dark vs Light: Task Iteration ${currentTask} (${bpmnType})`
+          `Template Dark vs Light: Iteration Service Task: ${currentServiceTask} User task: ${currentUserTask} (${bpmnType})`
         )
 
         const darkVsLightTemplate = new DarkVsLightTemplate(templateConfig)
-        templateConfig.config = darkVsLightTemplate.addIteration(
-          currentTask,
-          bpmnType
-        )
+        switch (bpmnType) {
+          case 'servicetask':
+            templateConfig.config = darkVsLightTemplate.addIteration(
+              currentServiceTask,
+              bpmnType,
+              proportionServiceTask
+            )
+            currentServiceTask++
+            break
+          case 'usertask':
+            templateConfig.config = darkVsLightTemplate.addIteration(
+              currentServiceTask,
+              bpmnType,
+              proportionUserTask
+            )
+            currentUserTask++
+            break
+          default:
+            complete.failure(`bpmnType ${bpmnType} unknown`)
+            return
+        }
 
         const response: any = {
           templateConfig,
-          currentTask: currentTask + 1,
-          maxTasks: (bpmnFacts.serviceTasks + bpmnFacts.userTasks) * 2,
+          currentServiceTask,
+          currentUserTask,
         }
 
         complete.success(response)
