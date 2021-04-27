@@ -35,6 +35,13 @@ export class TemplateDarkVsLightWorker {
         )
         const proportionUserTask = Number(job.variables.proportionUserTask)
 
+        if (proportionUserTask <= 0 || proportionServiceTask <= 0) {
+          complete.failure(
+            `Proportions not set correctly - user task: ${proportionUserTask}, service task: ${proportionServiceTask}`
+          )
+          return
+        }
+
         if (!templateConfig) {
           complete.failure('Template Config not found')
           return
